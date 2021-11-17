@@ -17,11 +17,11 @@ jobs:
       run: bundle install --without development test 
     - name: Download products_json
       uses: dawidd6/action-download-artifact@v2
+      continue-on-error: true
       with:
         name: products_json
         workflow: schedule.yml
-    - name: Main
-      if: success() || failure()
+    - name: Execute
       run: bundle exec ruby scripts/main.rb "${ARG}"
       env:
         ARG: products.json
@@ -29,7 +29,6 @@ jobs:
         SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
     - name: Save products_json
       uses: actions/upload-artifact@v2
-      if: always()
       with:
         name: products_json
         path: products.json
