@@ -14,7 +14,9 @@ jobs:
       with:
         ruby-version: 3.0.2
     - name: Install dependencies
-      run: bundle install --without development test 
+      run: |
+        bundle config set --local without 'development test'
+        bundle install
     - name: Download products_json
       uses: dawidd6/action-download-artifact@v2
       continue-on-error: true
