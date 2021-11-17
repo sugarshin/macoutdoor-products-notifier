@@ -2,7 +2,7 @@ name: Scheduler
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/6 * * * *'
   push:
     branches:
       - execute/*
