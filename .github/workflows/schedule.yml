@@ -3,9 +3,6 @@ name: Scheduler
 on:
   schedule:
     - cron: '*/6 * * * *'
-  push:
-    branches:
-      - execute/*
 
 jobs:
   notify:
