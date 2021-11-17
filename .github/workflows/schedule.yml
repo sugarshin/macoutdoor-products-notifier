@@ -1,0 +1,39 @@
+name: Scheduler
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  push:
+    branches:
+      - execute/*
+
+jobs:
+  notify:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@1
+        with:
+          ruby-version: 3.0.2
+    - name: Install dependencies
+      run: bundle install --without development test 
+    - name: Download products_json
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        name: products_json
+        workflow: schedule.yml
+    - name: Main
+      if: success() || failure()
+      run: bundle exec ruby scripts/main.rb "${ARG}"
+      env:
+        ARG: products.json
+        SLACK_BOT_USER_OAUTH_TOKEN: ${{ secrets.SLACK_BOT_USER_OAUTH_TOKEN }}
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+    - name: Save products_json
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: products_json
+        path: products.json
+  
