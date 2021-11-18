@@ -35,6 +35,9 @@ products = Products.new doc.css("ul[data-hook=product-list-wrapper] li div[data-
 json = products.generate_json
 if File.exist?(products_json_path)
   prev_json = File.read(products_json_path)
+  puts "date: #{JSON.parse(prev_json)["date"]}"
+else
+  puts "could not find previous products_json"
 end
 IO.write(products_json_path, json)
 
