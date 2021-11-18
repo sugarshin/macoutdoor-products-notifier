@@ -14,6 +14,10 @@ class Products
     new products
   end
 
+  def size
+    @products.size
+  end
+
   def generate_json(d = Time.now)
     JSON.generate({
       date: d,

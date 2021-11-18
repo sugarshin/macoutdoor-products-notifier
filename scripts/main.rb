@@ -14,11 +14,16 @@ if !products_json_path
   exit 1
 end
 
-LIMIT = 40 # maybe limit number
+LIMIT = rand(8..20)
 uri = "https://www.macoutdoorjapan.info/blank-1?page=#{LIMIT}"
 charset = nil
 begin
+  puts "start to requeste #{uri}"
   html = URI.parse(uri).open("User-Agent" => generate_user_agent) { |f|
+    if f.status[0] != "200"
+      puts "requested resource could not be accessed correctly"
+      puts html
+    end
     charset = f.charset
     f.read
   }
@@ -39,7 +44,11 @@ if File.exist?(products_json_path)
 else
   puts "could not find previous products_json"
 end
-IO.write(products_json_path, json)
+
+# if 0, it may be could not be accessed correctly
+if products.size != 0
+  IO.write(products_json_path, json)
+end
 
 new_products = products.pick_products_new_from prev_json
 restock_products = products.pick_products_restock_from prev_json
