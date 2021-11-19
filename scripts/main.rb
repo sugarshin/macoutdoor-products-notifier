@@ -18,7 +18,7 @@ LIMIT = rand(8..20)
 uri = "https://www.macoutdoorjapan.info/blank-1?page=#{LIMIT}"
 charset = nil
 begin
-  puts "start to requeste #{uri}"
+  puts "start to request to #{uri}"
   html = URI.parse(uri).open("User-Agent" => generate_user_agent) { |f|
     if f.status[0] != "200"
       puts "requested resource could not be accessed correctly"
