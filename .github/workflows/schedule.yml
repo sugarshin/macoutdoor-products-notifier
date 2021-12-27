@@ -2,7 +2,7 @@ name: Scheduler
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/30 * * * *'
 
 jobs:
   notify:
