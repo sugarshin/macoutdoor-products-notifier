@@ -1,8 +1,8 @@
 name: Scheduler
 
-on:
-  schedule:
-    - cron: '*/30 * * * *'
+on: push
+#   schedule:
+#     - cron: '*/30 * * * *'
 
 jobs:
   notify:
